@@ -1,4 +1,4 @@
-# react-text-highlight
+# react-text-underline
 
   **Author: Exaland Concept - Alexandre MAGNIER**
 
@@ -9,11 +9,11 @@
 ## Installation
 
 ```bash
-npm install react-text-highlight
+npm install react-text-underline
 # or
-yarn add react-text-highlight
+yarn add react-text-underline
 # or
-pnpm add react-text-highlight
+pnpm add react-text-underline
 ```
 
 > This component uses Tailwind CSS classes. Make sure Tailwind is configured in your project.
@@ -21,7 +21,7 @@ pnpm add react-text-highlight
 ## Usage
 
 ```tsx
-import TextHighlight from 'react-text-highlight';
+import TextHighlight from 'react-text-underline';
 
 <TextHighlight variant="marker" color="yellow">
 

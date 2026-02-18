@@ -1,5 +1,5 @@
 
-# react-text-highlight
+# react-text-underline
 
   **Auteur: Exaland Concept - Alexandre MAGNIER**
 
@@ -17,15 +17,15 @@
 
 ```bash
 
-npm  install  react-text-highlight
+npm  install  react-text-underline
 
 # ou
 
-yarn  add  react-text-highlight
+yarn  add  react-text-underline
 
 # ou
 
-pnpm  add  react-text-highlight
+pnpm  add  react-text-underline
 
 ```
 
@@ -41,7 +41,7 @@ pnpm  add  react-text-highlight
 
 ```tsx
 
-import TextHighlight from  'react-text-highlight';
+import TextHighlight from  'react-text-underline';
 
   
 
