@@ -29,7 +29,9 @@ jobs:
             echo "package.json already at version $VERSION, skipping npm version"
           fi
       - run: git push origin HEAD:main
-      - name: Build, Lint and Publish NPM Package
+      - name: Build NPM Package
+        run: npm run build
+      - name: Publish NPM Package
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

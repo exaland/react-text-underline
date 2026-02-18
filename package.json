@@ -1,6 +1,6 @@
 {
   "name": "react-text-underline",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Premium text highlight & underline effects for React — marker, brushstroke, gradient, slide, glow, scratch, double, wave",
   "keywords": [
     "react",
@@ -20,9 +20,14 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
   },
   "files": [
