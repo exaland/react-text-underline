@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>react-text-underline — Live Demo</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f12;
+      --surface: #18181d;
+      --surface2: #22222a;
+      --border: #2e2e38;
+      --text: #e8e8f0;
+      --muted: #8888a0;
+      --accent: #7c6af7;
+      --accent2: #06b6d4;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 15, 18, 0.88);
+    }
+    header .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 1.05rem;
+    }
+    header .logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    header nav { display: flex; gap: 12px; flex-wrap: wrap; }
+    header nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    header nav a:hover { color: var(--text); border-color: var(--accent); }
+    header nav a.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    header nav a.primary:hover { opacity: 0.85; }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 860px;
+      margin: 80px auto 0;
+      padding: 0 32px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 14px;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; line-height: 1.15; margin-bottom: 16px; }
+    .hero p { font-size: 1.05rem; color: var(--muted); max-width: 540px; margin: 0 auto 32px; }
+    .install-block {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      color: var(--accent2);
+      margin-bottom: 64px;
+    }
+    .install-block span { color: var(--muted); }
+
+    /* ── Sections ── */
+    section {
+      max-width: 980px;
+      margin: 0 auto 80px;
+      padding: 0 32px;
+    }
+    section h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+    }
+
+    /* ── Demo cards grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px 20px;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: var(--accent); }
+    .card-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .card-preview {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .card-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--muted);
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .card-code .kw  { color: #a78bfa; }
+    .card-code .str { color: #6ee7b7; }
+    .card-code .tag { color: #60a5fa; }
+
+    /* ── Color palette ── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .color-swatch {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      cursor: pointer;
+    }
+    .swatch-circle {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 2px solid transparent;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .color-swatch.active .swatch-circle,
+    .color-swatch:hover .swatch-circle { border-color: var(--text); transform: scale(1.1); }
+    .swatch-label { font-size: 0.7rem; color: var(--muted); font-weight: 500; }
+
+    .color-preview-area {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    /* ── Usage section ── */
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+    .code-block .kw  { color: #a78bfa; }
+    .code-block .str { color: #6ee7b7; }
+    .code-block .tag { color: #60a5fa; }
+    .code-block .cmt { color: #555577; }
+    .code-block .attr { color: #fbbf24; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 32px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent2); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Variant pills ── */
+    .variant-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .pill {
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pill.active, .pill:hover { border-color: var(--accent); color: var(--text); background: var(--surface2); }
+    .pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    .playground-preview {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .divider { height: 1px; background: var(--border); margin: 80px auto; max-width: 980px; }
+  </style>
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useRef } = React;
+
+    /* ────────── Re-implementation of TextHighlight ────────── */
+    const COLORS = {
+      yellow:     { highlight: '#fde68a', text: null },
+      cyan:       { highlight: '#a5f3fc', text: null },
+      green:      { highlight: '#bbf7d0', text: null },
+      pink:       { highlight: '#fbcfe8', text: null },
+      orange:     { highlight: '#fed7aa', text: null },
+      purple:     { highlight: '#ddd6fe', text: null },
+      blue:       { highlight: '#bfdbfe', text: null },
+      red:        { highlight: '#fecaca', text: null },
+      neonCyan:   { highlight: '#06b6d4', text: '#fff' },
+      neonPurple: { highlight: '#a855f7', text: '#fff' },
+      neonGreen:  { highlight: '#22c55e', text: '#fff' },
+    };
+
+    const GRADIENTS = {
+      yellow:     'linear-gradient(90deg, #fde68a, #fbbf24)',
+      cyan:       'linear-gradient(90deg, #a5f3fc, #22d3ee)',
+      green:      'linear-gradient(90deg, #bbf7d0, #4ade80)',
+      pink:       'linear-gradient(90deg, #fbcfe8, #f472b6)',
+      orange:     'linear-gradient(90deg, #fed7aa, #fb923c)',
+      purple:     'linear-gradient(90deg, #ddd6fe, #a78bfa)',
+      blue:       'linear-gradient(90deg, #bfdbfe, #60a5fa)',
+      red:        'linear-gradient(90deg, #fecaca, #f87171)',
+      neonCyan:   'linear-gradient(90deg, #06b6d4, #0ea5e9)',
+      neonPurple: 'linear-gradient(90deg, #a855f7, #ec4899)',
+      neonGreen:  'linear-gradient(90deg, #22c55e, #84cc16)',
+    };
+
+    function TextHighlight({ children, variant = 'marker', color = 'yellow', animate = true, style = {} }) {
+      const c = COLORS[color] ?? COLORS.yellow;
+
+      if (variant === 'marker') {
+        return (
+          <span
+            style={{
+              position: 'relative', padding: '0 4px',
+              background: `linear-gradient(120deg, ${c.highlight} 0%, ${c.highlight} 100%)`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: animate ? '0% 55%' : '100% 55%',
+              backgroundPosition: '0 88%',
+              transition: 'background-size 0.5s cubic-bezier(0.4,0,0.2,1)',
+              color: c.text ?? 'inherit',
+              ...style,
+            }}
+            onMouseEnter={e => animate && (e.currentTarget.style.backgroundSize = '100% 55%')}
+            onMouseLeave={e => animate && (e.currentTarget.style.backgroundSize = '0% 55%')}
+          >{children}</span>
+        );
+      }
+
+      if (variant === 'brushstroke') {
+        return (
+          <span style={{ position: 'relative', display: 'inline-block', color: c.text ?? 'inherit', ...style }}>
+            <svg aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, bottom: -6, width: '100%', overflow: 'visible', pointerEvents: 'none' }}
+              viewBox="0 0 200 12" preserveAspectRatio="none" height="12">
+              <path d="M2 9 C30 3, 70 11, 100 7 C130 3, 160 10, 198 6" fill="none" stroke={c.highlight}
+                strokeWidth="7" strokeLinecap="round"
+                ref={el => {
+                  if (el && animate) {
+                    el.style.strokeDasharray = 220;
+                    el.style.strokeDashoffset = 220;
+                    el.style.transition = 'stroke-dashoffset 0.7s cubic-bezier(0.4,0,0.2,1)';
+                    requestAnimationFrame(() => { el.style.strokeDashoffset = 0; });
+                  }
+                }}
+              />
+            </svg>
+            {children}
+          </span>
+        );
+      }
+
+      if (variant === 'slide') {
+        return (
+          <span style={{ position: 'relative', display: 'inline-block', cursor: 'default', color: c.text ?? 'inherit', ...style }}>
+            <span style={{ position: 'absolute', inset: 0, transformOrigin: 'left', background: c.highlight,
+              transform: 'scaleX(0)', transition: 'transform 0.4s cubic-bezier(0.4,0,0.2,1)', zIndex: 0, borderRadius: 2 }}
+              ref={el => {
+                if (!el) return;
+                const p = el.parentElement;
+                if (!animate) { el.style.transform = 'scaleX(1)'; return; }
+                p?.addEventListener('mouseenter', () => (el.style.transform = 'scaleX(1)'));
+                p?.addEventListener('mouseleave', () => (el.style.transform = 'scaleX(0)'));
+              }}
+            />
+            <span style={{ position: 'relative', zIndex: 10 }}>{children}</span>
+          </span>
+        );
+      }
+
+      if (variant === 'gradient') {
+        return (
+          <span style={{ position: 'relative', display: 'inline-block', color: c.text ?? 'inherit', ...style }}>
+            {children}
+            <span style={{ position: 'absolute', bottom: 0, left: 0, height: 3, borderRadius: 9999,
+              background: GRADIENTS[color] ?? GRADIENTS.yellow,
+              width: animate ? '0%' : '100%', transition: 'width 0.5s cubic-bezier(0.4,0,0.2,1)' }}
+              ref={el => {
+                if (!el) return;
+                const p = el.parentElement;
+                if (!animate) return;
+                p?.addEventListener('mouseenter', () => (el.style.width = '100%'));
+                p?.addEventListener('mouseleave', () => (el.style.width = '0%'));
+              }}
+            />
+          </span>
+        );
+      }
+
+      if (variant === 'glow') {
+        return (
+          <span style={{ position: 'relative', display: 'inline-block', fontWeight: 'bold',
+            color: c.highlight,
+            textShadow: `0 0 20px ${c.highlight}88, 0 0 40px ${c.highlight}44`,
+            transition: 'text-shadow 0.3s ease', ...style }}
+            onMouseEnter={e => (e.currentTarget.style.textShadow = `0 0 10px ${c.highlight}, 0 0 30px ${c.highlight}cc, 0 0 60px ${c.highlight}66`)}
+            onMouseLeave={e => (e.currentTarget.style.textShadow = `0 0 20px ${c.highlight}88, 0 0 40px ${c.highlight}44`)}
+          >{children}</span>
+        );
+      }
+
+      if (variant === 'scratch') {
+        return (
+          <span style={{ position: 'relative', display: 'inline-block', ...style }}>
+            {children}
+            <svg aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, bottom: -4, width: '100%', overflow: 'visible', pointerEvents: 'none' }}
+              viewBox="0 0 200 8" preserveAspectRatio="none" height="8">
+              <path d="M1 5 C10 2, 20 7, 35 4 C50 1, 60 6, 80 4 C100 2, 115 7, 135 5 C155 3, 170 7, 199 4"
+                fill="none" stroke={c.highlight} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M2 7 C25 5, 50 8, 90 6 C120 4, 155 8, 198 6"
+                fill="none" stroke={c.highlight} strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+            </svg>
+          </span>
+        );
+      }
+
+      if (variant === 'double') {
+        return (
+          <span style={{ position: 'relative', display: 'inline-block', ...style }}>
+            {children}
+            <span style={{ position: 'absolute', left: 0, right: 0, bottom: -3, height: 1, borderRadius: 9999, background: c.highlight }} />
+            <span style={{ position: 'absolute', left: 0, right: 0, bottom: -7, height: 3, borderRadius: 9999, background: c.highlight }} />
+          </span>
+        );
+      }
+
+      if (variant === 'wave') {
+        return (
+          <span style={{ position: 'relative', display: 'inline-block', paddingBottom: 8, ...style }}>
+            {children}
+            <svg aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, bottom: 0, width: '100%', overflow: 'visible', pointerEvents: 'none' }}
+              viewBox="0 0 200 6" preserveAspectRatio="none" height="6">
+              <path d="M0 3 Q10 0 20 3 Q30 6 40 3 Q50 0 60 3 Q70 6 80 3 Q90 0 100 3 Q110 6 120 3 Q130 0 140 3 Q150 6 160 3 Q170 0 180 3 Q190 6 200 3"
+                fill="none" stroke={c.highlight} strokeWidth="2.5" strokeLinecap="round" />
+            </svg>
+          </span>
+        );
+      }
+
+      return <span>{children}</span>;
+    }
+
+    /* ─────────────────── Swatch colors ─────────────────── */
+    const SWATCH_COLORS = {
+      yellow:     '#fde68a', cyan:       '#a5f3fc', green:  '#bbf7d0',
+      pink:       '#fbcfe8', orange:     '#fed7aa', purple: '#ddd6fe',
+      blue:       '#bfdbfe', red:        '#fecaca',
+      neonCyan:   '#06b6d4', neonPurple: '#a855f7', neonGreen: '#22c55e',
+    };
+
+    const VARIANTS = ['marker', 'brushstroke', 'gradient', 'slide', 'glow', 'scratch', 'double', 'wave'];
+
+    /* ─────────────────── App ─────────────────── */
+    function App() {
+      const [pgVariant, setPgVariant] = useState('marker');
+      const [pgColor,   setPgColor]   = useState('yellow');
+
+      const variantDescriptions = {
+        marker:     'Surligneur qui s\'anime au hover',
+        brushstroke: 'Trait de pinceau SVG sous le texte',
+        gradient:   'Soulignement dégradé au hover',
+        slide:      'Fond qui glisse derrière le texte',
+        glow:       'Lueur lumineuse sur le texte',
+        scratch:    'Soulignement manuscrit double trait',
+        double:     'Double soulignement parallèle',
+        wave:       'Soulignement en vague sinusoïdale',
+      };
+
+      return (
+        <>
+          <header>
+            <div className="logo">
+              <div className="dot" />
+              react-text-underline
+            </div>
+            <nav>
+              <a href="https://www.npmjs.com/package/react-text-underline" target="_blank">npm</a>
+              <a href="https://github.com/exaland/react-text-underline" target="_blank" className="primary">GitHub →</a>
+            </nav>
+          </header>
+
+          {/* ── Hero ── */}
+          <div className="hero">
+            <div className="badge">React Component Library</div>
+            <h1>
+              Text effects that{' '}
+              make your{' '}
+              <TextHighlight variant="marker" color="neonPurple" animate={false}>
+                UI shine
+              </TextHighlight>
+            </h1>
+            <p>
+              8 variants, 11 colors — marker, brushstroke, gradient, slide, glow, scratch, double, wave.
+              Zero dependencies beyond React.
+            </p>
+            <div className="install-block">
+              <span>$</span> npm install react-text-underline
+            </div>
+          </div>
+
+          {/* ── All Variants ── */}
+          <section>
+            <h2>All variants</h2>
+            <p className="section-sub">Hover over each card to trigger the animation.</p>
+            <div className="grid">
+              {VARIANTS.map(v => (
+                <div className="card" key={v}>
+                  <div className="card-label">{v}</div>
+                  <div className="card-preview">
+                    <TextHighlight variant={v} color="neonPurple">{v === 'glow' ? 'Glow effect' : 'Hello world'}</TextHighlight>
+                  </div>
+                  <pre className="card-code"><span className="tag">&lt;TextHighlight</span>{'\n'}  <span className="attr">variant</span>=<span className="str">"{v}"</span>{'\n'}  <span className="attr">color</span>=<span className="str">"neonPurple"</span>{'\n'}<span className="tag">&gt;</span>Hello world<span className="tag">&lt;/TextHighlight&gt;</span></pre>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <div className="divider" />
+
+          {/* ── Playground ── */}
+          <section>
+            <h2>Playground</h2>
+            <p className="section-sub">Click a variant and a color to preview the combination live.</p>
+
+            {/* Variant pills */}
+            <div className="variant-pills">
+              {VARIANTS.map(v => (
+                <button key={v} className={`pill${pgVariant === v ? ' active' : ''}`} onClick={() => setPgVariant(v)}>
+                  {v}
+                </button>
+              ))}
+            </div>
+
+            {/* Color swatches */}
+            <div className="color-grid">
+              {Object.entries(SWATCH_COLORS).map(([name, hex]) => (
+                <div key={name} className={`color-swatch${pgColor === name ? ' active' : ''}`} onClick={() => setPgColor(name)}>
+                  <div className="swatch-circle" style={{ background: hex }} />
+                  <span className="swatch-label">{name}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Live preview */}
+            <div className="playground-preview">
+              <TextHighlight key={`${pgVariant}-${pgColor}`} variant={pgVariant} color={pgColor}>
+                Beautiful Typography
+              </TextHighlight>
+            </div>
+
+            {/* Code snippet */}
+            <div className="code-block">
+              <span className="kw">import</span> {'{ TextHighlight }'} <span className="kw">from</span> <span className="str">'react-text-underline'</span>;{'\n\n'}
+              <span className="tag">&lt;TextHighlight</span>{'\n'}
+              {'  '}<span className="attr">variant</span>=<span className="str">"{pgVariant}"</span>{'\n'}
+              {'  '}<span className="attr">color</span>=<span className="str">"{pgColor}"</span>{'\n'}
+              <span className="tag">&gt;</span>{'\n'}
+              {'  '}Beautiful Typography{'\n'}
+              <span className="tag">&lt;/TextHighlight&gt;</span>
+            </div>
+          </section>
+
+          <div className="divider" />
+
+          {/* ── Usage ── */}
+          <section>
+            <h2>Quick start</h2>
+            <p className="section-sub">Install and import — no extra config needed.</p>
+            <div className="code-block">
+              <span className="cmt"># Install</span>{'\n'}
+              npm install react-text-underline{'\n\n'}
+              <span className="cmt"># Usage</span>{'\n'}
+              <span className="kw">import</span> {'{ TextHighlight }'} <span className="kw">from</span> <span className="str">'react-text-underline'</span>;{'\n\n'}
+              <span className="kw">export default function</span> <span className="tag">Page</span>() {'{'}{'\n'}
+              {'  '}<span className="kw">return</span> ({'\n'}
+              {'    '}<span className="tag">&lt;h1&gt;</span>{'\n'}
+              {'      '}Build <span className="tag">&lt;TextHighlight</span> <span className="attr">variant</span>=<span className="str">"marker"</span> <span className="attr">color</span>=<span className="str">"yellow"</span><span className="tag">&gt;</span>amazing<span className="tag">&lt;/TextHighlight&gt;</span> products{'\n'}
+              {'    '}<span className="tag">&lt;/h1&gt;</span>{'\n'}
+              {'  '});{'\n'}
+              {'}'}
+            </div>
+          </section>
+
+          {/* ── Props ── */}
+          <section>
+            <h2>Props</h2>
+            <p className="section-sub">All props are optional and have sensible defaults.</p>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid #2e2e38' }}>
+                  {['Prop', 'Type', 'Default', 'Description'].map(h => (
+                    <th key={h} style={{ textAlign: 'left', padding: '10px 16px', color: '#8888a0', fontWeight: 600 }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['variant', '"marker" | "brushstroke" | "gradient" | "slide" | "glow" | "scratch" | "double" | "wave"', '"marker"', 'Visual effect style'],
+                  ['color',   '"yellow" | "cyan" | "green" | "pink" | "orange" | "purple" | "blue" | "red" | "neonCyan" | "neonPurple" | "neonGreen"', '"yellow"', 'Highlight color'],
+                  ['animate', 'boolean', 'true', 'Enable hover animations'],
+                  ['className','string', '""', 'Additional CSS classes'],
+                ].map(([prop, type, def, desc], i) => (
+                  <tr key={i} style={{ borderBottom: '1px solid #22222a' }}>
+                    <td style={{ padding: '12px 16px', fontFamily: 'JetBrains Mono, monospace', color: '#a78bfa' }}>{prop}</td>
+                    <td style={{ padding: '12px 16px', fontFamily: 'JetBrains Mono, monospace', color: '#6ee7b7', fontSize: '0.75rem' }}>{type}</td>
+                    <td style={{ padding: '12px 16px', fontFamily: 'JetBrains Mono, monospace', color: '#fbbf24' }}>{def}</td>
+                    <td style={{ padding: '12px 16px', color: '#8888a0' }}>{desc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+
+          <footer>
+            Built with ♥ by <a href="https://github.com/exaland" target="_blank">Exaland</a> ·{' '}
+            <a href="https://www.npmjs.com/package/react-text-underline" target="_blank">npm</a> ·{' '}
+            <a href="https://github.com/exaland/react-text-underline" target="_blank">GitHub</a> ·{' '}
+            MIT License
+          </footer>
+        </>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
