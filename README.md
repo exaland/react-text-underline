@@ -1,11 +1,14 @@
 
-# react-text-underline
+# react-text-highlight
 
   **Auteur: Exaland Concept - Alexandre MAGNIER**
 
 > Composants de surlignage & soulignage premium pour React.
 
-  
+## Demonstration
+[Tester la Demonstration](https://exaland.github.io/react-text-underline/)
+
+---
 
 8 variants animés : **marker**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**.
 
@@ -17,15 +20,15 @@
 
 ```bash
 
-npm  install  react-text-underline
+npm  install  react-text-highlight
 
 # ou
 
-yarn  add  react-text-underline
+yarn  add  react-text-highlight
 
 # ou
 
-pnpm  add  react-text-underline
+pnpm  add  react-text-highlight
 
 ```
 
@@ -41,7 +44,7 @@ pnpm  add  react-text-underline
 
 ```tsx
 
-import TextHighlight from  'react-text-underline';
+import TextHighlight from  'react-text-highlight';
 
   
 

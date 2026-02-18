@@ -4,6 +4,11 @@
 
 > Premium highlighting & underlining components for React.
 
+## Demonstration
+[Online Demonstration](https://exaland.github.io/react-text-underline/)
+
+---
+
 8 animated variants: **marker**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**.
 
 ## Installation
