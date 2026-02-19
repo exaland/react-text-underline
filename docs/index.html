@@ -291,8 +291,27 @@
       neonGreen:  'linear-gradient(90deg, #22c55e, #84cc16)',
     };
 
+    function hexToRgba(hex, alpha) {
+      const cleaned = String(hex ?? '').replace('#', '').trim();
+      const expanded = cleaned.length === 3 ? cleaned.split('').map(c => c + c).join('') : cleaned;
+      if (expanded.length !== 6) return `rgba(0,0,0,${alpha})`;
+      const r = parseInt(expanded.slice(0, 2), 16);
+      const g = parseInt(expanded.slice(2, 4), 16);
+      const b = parseInt(expanded.slice(4, 6), 16);
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
     function TextHighlight({ children, variant = 'marker', color = 'yellow', animate = true, style = {} }) {
       const c = COLORS[color] ?? COLORS.yellow;
+
+      const brushBgRef = React.useRef(null);
+      const brushBaseTransform = 'translateY(-50%) rotate(-1deg) skewX(-8deg)';
+      const setBrushVisible = (visible) => {
+        if (!animate) return;
+        const el = brushBgRef.current;
+        if (!el) return;
+        el.style.transform = `${brushBaseTransform} scaleX(${visible ? 1 : 0})`;
+      };
 
       if (variant === 'marker') {
         return (
@@ -310,6 +329,48 @@
             onMouseEnter={e => animate && (e.currentTarget.style.backgroundSize = '100% 55%')}
             onMouseLeave={e => animate && (e.currentTarget.style.backgroundSize = '0% 55%')}
           >{children}</span>
+        );
+      }
+
+      if (variant === 'brush') {
+        const base = c.highlight;
+        const baseHi = hexToRgba(base, 0.92);
+        const baseMid = hexToRgba(base, 0.78);
+        const baseLo = hexToRgba(base, 0.35);
+
+        return (
+          <span
+            style={{ position: 'relative', display: 'inline-block', color: c.text ?? 'inherit', ...style }}
+            onMouseEnter={() => setBrushVisible(true)}
+            onMouseLeave={() => setBrushVisible(false)}
+          >
+            <span
+              aria-hidden="true"
+              ref={brushBgRef}
+              style={{
+                position: 'absolute',
+                left: -2,
+                right: -2,
+                top: '60%',
+                height: '1.05em',
+                zIndex: 0,
+                pointerEvents: 'none',
+                transformOrigin: '0 50%',
+                transform: `${brushBaseTransform} scaleX(${animate ? 0 : 1})`,
+                transition: 'transform 0.45s cubic-bezier(0.4,0,0.2,1)',
+                borderRadius: 999,
+                backgroundImage: [
+                  `linear-gradient(180deg, ${baseMid}, ${baseHi} 55%, ${baseMid})`,
+                  `repeating-linear-gradient(-25deg, ${baseLo} 0 2px, ${hexToRgba(base, 0)} 2px 7px)`,
+                ].join(', '),
+                backgroundBlendMode: 'multiply',
+                backgroundRepeat: 'no-repeat, no-repeat',
+                backgroundSize: '100% 100%, 100% 100%',
+                filter: `drop-shadow(0 1px 0 ${hexToRgba(base, 0.25)})`,
+              }}
+            />
+            <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
+          </span>
         );
       }
 
@@ -433,7 +494,7 @@
       neonCyan:   '#06b6d4', neonPurple: '#a855f7', neonGreen: '#22c55e',
     };
 
-    const VARIANTS = ['marker', 'brushstroke', 'gradient', 'slide', 'glow', 'scratch', 'double', 'wave'];
+    const VARIANTS = ['marker', 'brush', 'brushstroke', 'gradient', 'slide', 'glow', 'scratch', 'double', 'wave'];
 
     /* ─────────────────── App ─────────────────── */
     function App() {
@@ -442,6 +503,7 @@
 
       const variantDescriptions = {
         marker:     'Surligneur qui s\'anime au hover',
+        brush:      'Surlignage façon pinceau derrière le texte',
         brushstroke: 'Trait de pinceau SVG sous le texte',
         gradient:   'Soulignement dégradé au hover',
         slide:      'Fond qui glisse derrière le texte',
@@ -475,7 +537,7 @@
               </TextHighlight>
             </h1>
             <p>
-              8 variants, 11 colors — marker, brushstroke, gradient, slide, glow, scratch, double, wave.
+              9 variants, 11 colors — marker, brush, brushstroke, gradient, slide, glow, scratch, double, wave.
               Zero dependencies beyond React.
             </p>
             <div className="install-block">
@@ -580,7 +642,7 @@
               </thead>
               <tbody>
                 {[
-                  ['variant', '"marker" | "brushstroke" | "gradient" | "slide" | "glow" | "scratch" | "double" | "wave"', '"marker"', 'Visual effect style'],
+                  ['variant', '"marker" | "brush" | "brushstroke" | "gradient" | "slide" | "glow" | "scratch" | "double" | "wave"', '"marker"', 'Visual effect style'],
                   ['color',   '"yellow" | "cyan" | "green" | "pink" | "orange" | "purple" | "blue" | "red" | "neonCyan" | "neonPurple" | "neonGreen"', '"yellow"', 'Highlight color'],
                   ['animate', 'boolean', 'true', 'Enable hover animations'],
                   ['className','string', '""', 'Additional CSS classes'],

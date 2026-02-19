@@ -10,7 +10,7 @@
 
 ---
 
-8 variants animés : **marker**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**.
+9 variants animés : **marker**, **brush**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**.
 
   
 
@@ -68,6 +68,8 @@ livraison express
 
 | `marker` | Marqueur fluorescent au hover |
 
+| `brush` | Surlignage façon pinceau (brush) derrière le texte |
+
 | `brushstroke` | Trait de pinceau SVG sous le texte |
 
 | `gradient` | Underline dégradé animé au hover |
@@ -123,6 +125,16 @@ livraison express
 <TextHighlight  variant="brushstroke"  color="cyan"  animate={false}>
 
 applications mobiles
+
+</TextHighlight>
+
+  
+
+// Brush highlight au hover
+
+<TextHighlight  variant="brush"  color="yellow">
+
+offre limitée
 
 </TextHighlight>
 

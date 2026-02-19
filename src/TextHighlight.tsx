@@ -15,6 +15,7 @@ export type HighlightColor =
 
 export type HighlightVariant =
   | 'marker'
+  | 'brush'
   | 'brushstroke'
   | 'gradient'
   | 'slide'
@@ -59,6 +60,20 @@ const GRADIENTS: Record<HighlightColor, string> = {
   neonGreen:  'linear-gradient(90deg, #22c55e, #84cc16)',
 };
 
+function hexToRgba(hex: string, alpha: number) {
+  const cleaned = hex.replace('#', '').trim();
+  const expanded = cleaned.length === 3
+    ? cleaned.split('').map((c) => c + c).join('')
+    : cleaned;
+
+  if (expanded.length !== 6) return `rgba(0,0,0,${alpha})`;
+
+  const r = parseInt(expanded.slice(0, 2), 16);
+  const g = parseInt(expanded.slice(2, 4), 16);
+  const b = parseInt(expanded.slice(4, 6), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
 export function TextHighlight({
   children,
   variant = 'marker',
@@ -67,6 +82,16 @@ export function TextHighlight({
   animate = true,
 }: TextHighlightProps) {
   const c = COLORS[color] ?? COLORS.yellow;
+
+  const brushBgRef = React.useRef<HTMLSpanElement | null>(null);
+  const brushBaseTransform = 'translateY(-50%) rotate(-1deg) skewX(-8deg)';
+
+  const setBrushVisible = (visible: boolean) => {
+    if (!animate) return;
+    const el = brushBgRef.current;
+    if (!el) return;
+    el.style.transform = `${brushBaseTransform} scaleX(${visible ? 1 : 0})`;
+  };
 
   /* ────────────────────────────── MARKER ── */
   if (variant === 'marker') {
@@ -89,6 +114,50 @@ export function TextHighlight({
         }
       >
         {children}
+      </span>
+    );
+  }
+
+  /* ─────────────────────────────── BRUSH ── */
+  if (variant === 'brush') {
+    const base = c.highlight;
+    const baseHi = hexToRgba(base, 0.92);
+    const baseMid = hexToRgba(base, 0.78);
+    const baseLo = hexToRgba(base, 0.35);
+
+    return (
+      <span
+        className={`relative inline-block ${className}`}
+        style={{ color: c.text ?? 'inherit' }}
+        onMouseEnter={() => setBrushVisible(true)}
+        onMouseLeave={() => setBrushVisible(false)}
+      >
+        <span
+          aria-hidden="true"
+          ref={brushBgRef}
+          style={{
+            position: 'absolute',
+            left: '-2px',
+            right: '-2px',
+            top: '60%',
+            height: '1.05em',
+            zIndex: 0,
+            pointerEvents: 'none',
+            transformOrigin: '0 50%',
+            transform: `${brushBaseTransform} scaleX(${animate ? 0 : 1})`,
+            transition: 'transform 0.45s cubic-bezier(0.4,0,0.2,1)',
+            borderRadius: 999,
+            backgroundImage: [
+              `linear-gradient(180deg, ${baseMid}, ${baseHi} 55%, ${baseMid})`,
+              `repeating-linear-gradient(-25deg, ${baseLo} 0 2px, ${hexToRgba(base, 0)} 2px 7px)`,
+            ].join(', '),
+            backgroundBlendMode: 'multiply',
+            backgroundRepeat: 'no-repeat, no-repeat',
+            backgroundSize: '100% 100%, 100% 100%',
+            filter: `drop-shadow(0 1px 0 ${hexToRgba(base, 0.25)})`,
+          }}
+        />
+        <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
       </span>
     );
   }
