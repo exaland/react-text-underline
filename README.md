@@ -1,16 +1,20 @@
 
-# react-text-underline
+# react-text-highlight
+
+> [English Readme Here](https://github.com/exaland/react-text-underline/blob/main/README_EN.md)
+
+  ![text-underline-new](https://github.com/user-attachments/assets/d7d0f759-fa54-4670-a904-842d7927392b)
 
   **Auteur: Exaland Concept - Alexandre MAGNIER**
 
 > Composants de surlignage & soulignage premium pour React.
 
-## Demonstration
-[Tester la Demonstration](https://exaland.github.io/react-text-underline/)
+  ## Demonstration
+[Online Demonstration](https://exaland.github.io/react-text-underline/)
 
 ---
 
-9 variants animés : **marker**, **brush**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**.
+8 variants animés : **marker**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**.
 
   
 
@@ -20,15 +24,15 @@
 
 ```bash
 
-npm  install  react-text-underline
+npm  install  react-text-highlight
 
 # ou
 
-yarn  add  react-text-underline
+yarn  add  react-text-highlight
 
 # ou
 
-pnpm  add  react-text-underline
+pnpm  add  react-text-highlight
 
 ```
 
@@ -44,7 +48,7 @@ pnpm  add  react-text-underline
 
 ```tsx
 
-import TextHighlight from  'react-text-underline';
+import TextHighlight from  'react-text-highlight';
 
   
 
@@ -67,8 +71,6 @@ livraison express
 |----------------|-------------------------------------------|
 
 | `marker` | Marqueur fluorescent au hover |
-
-| `brush` | Surlignage façon pinceau (brush) derrière le texte |
 
 | `brushstroke` | Trait de pinceau SVG sous le texte |
 
@@ -125,16 +127,6 @@ livraison express
 <TextHighlight  variant="brushstroke"  color="cyan"  animate={false}>
 
 applications mobiles
-
-</TextHighlight>
-
-  
-
-// Brush highlight au hover
-
-<TextHighlight  variant="brush"  color="yellow">
-
-offre limitée
 
 </TextHighlight>
 

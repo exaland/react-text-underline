@@ -1,5 +1,7 @@
 # react-text-underline
 
+  ![text-underline-new](https://github.com/user-attachments/assets/d7d0f759-fa54-4670-a904-842d7927392b)
+
   **Author: Exaland Concept - Alexandre MAGNIER**
 
 > Premium highlighting & underlining components for React.
