@@ -19,7 +19,7 @@
 
 ---
 
-8 variants animés : **marker**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**.
+12 variants animés : **marker**, **brush**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**, **pill**, **dashed**, **blur**.
 
   
 
@@ -90,6 +90,12 @@ livraison express
 | `double` | Double ligne élégante |
 
 | `wave` | Soulignage ondulé SVG |
+
+| `pill` | Surlignage capsule arrondi |
+
+| `dashed` | Soulignage en tirets animé |
+
+| `blur` | Halo diffus sous le texte |
 
   
 
@@ -192,6 +198,30 @@ expertise
 <TextHighlight  variant="wave"  color="blue">
 
 solutions clé en main
+
+</TextHighlight>
+
+// Capsule arrondie
+
+<TextHighlight  variant="pill"  color="purple">
+
+nouvelle collection
+
+</TextHighlight>
+
+// Soulignage en tirets
+
+<TextHighlight  variant="dashed"  color="red">
+
+édition limitée
+
+</TextHighlight>
+
+// Halo flou
+
+<TextHighlight  variant="blur"  color="neonGreen">
+
+focus instantané
 
 </TextHighlight>
 

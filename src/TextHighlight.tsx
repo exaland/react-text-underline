@@ -22,7 +22,10 @@ export type HighlightVariant =
   | 'glow'
   | 'scratch'
   | 'double'
-  | 'wave';
+  | 'wave'
+  | 'pill'
+  | 'dashed'
+  | 'blur';
 
 export interface TextHighlightProps {
   children: React.ReactNode;
@@ -352,6 +355,138 @@ export function TextHighlight({
             strokeLinecap="round"
           />
         </svg>
+      </span>
+    );
+  }
+
+  /* ───────────────────────────────── PILL ── */
+  if (variant === 'pill') {
+    return (
+      <span
+        className={`relative inline-block px-2 ${className}`}
+        style={{ color: c.text ?? 'inherit' }}
+        onMouseEnter={(e) => {
+          if (!animate) return;
+          const bg = (e.currentTarget as HTMLElement).querySelector('[data-pill-bg]') as HTMLElement | null;
+          if (!bg) return;
+          bg.style.opacity = '0.9';
+          bg.style.transform = 'translateY(-50%) scaleX(1)';
+        }}
+        onMouseLeave={(e) => {
+          if (!animate) return;
+          const bg = (e.currentTarget as HTMLElement).querySelector('[data-pill-bg]') as HTMLElement | null;
+          if (!bg) return;
+          bg.style.opacity = '0';
+          bg.style.transform = 'translateY(-50%) scaleX(0.2)';
+        }}
+      >
+        <span
+          data-pill-bg
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: '54%',
+            height: '1.05em',
+            background: c.highlight,
+            borderRadius: 999,
+            opacity: animate ? 0 : 0.9,
+            transform: `translateY(-50%) scaleX(${animate ? 0.2 : 1})`,
+            transformOrigin: '50% 50%',
+            transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease',
+            zIndex: 0,
+          }}
+        />
+        <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
+      </span>
+    );
+  }
+
+  /* ─────────────────────────────── DASHED ── */
+  if (variant === 'dashed') {
+    return (
+      <span
+        className={`relative inline-block pb-[2px] ${className}`}
+        style={{ color: c.text ?? 'inherit' }}
+        onMouseEnter={(e) => {
+          if (!animate) return;
+          const line = (e.currentTarget as HTMLElement).querySelector('[data-dashed-line]') as HTMLElement | null;
+          if (!line) return;
+          line.style.width = '100%';
+          line.style.backgroundPosition = '18px 0';
+        }}
+        onMouseLeave={(e) => {
+          if (!animate) return;
+          const line = (e.currentTarget as HTMLElement).querySelector('[data-dashed-line]') as HTMLElement | null;
+          if (!line) return;
+          line.style.width = '0%';
+          line.style.backgroundPosition = '0 0';
+        }}
+      >
+        <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
+        <span
+          data-dashed-line
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: 0,
+            bottom: 0,
+            height: 3,
+            width: animate ? '0%' : '100%',
+            borderRadius: 999,
+            backgroundImage: `repeating-linear-gradient(90deg, ${c.highlight} 0 9px, transparent 9px 13px)`,
+            backgroundPosition: '0 0',
+            transition: 'width 0.35s cubic-bezier(0.4,0,0.2,1), background-position 0.35s ease',
+            zIndex: 0,
+          }}
+        />
+      </span>
+    );
+  }
+
+  /* ───────────────────────────────── BLUR ── */
+  if (variant === 'blur') {
+    return (
+      <span
+        className={`relative inline-block ${className}`}
+        style={{ color: c.text ?? 'inherit' }}
+        onMouseEnter={(e) => {
+          if (!animate) return;
+          const glow = (e.currentTarget as HTMLElement).querySelector('[data-blur-bg]') as HTMLElement | null;
+          if (!glow) return;
+          glow.style.opacity = '0.75';
+          glow.style.transform = 'translateY(-50%) scaleX(1)';
+        }}
+        onMouseLeave={(e) => {
+          if (!animate) return;
+          const glow = (e.currentTarget as HTMLElement).querySelector('[data-blur-bg]') as HTMLElement | null;
+          if (!glow) return;
+          glow.style.opacity = '0';
+          glow.style.transform = 'translateY(-50%) scaleX(0.4)';
+        }}
+      >
+        <span
+          data-blur-bg
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: '-1px',
+            right: '-1px',
+            top: '58%',
+            height: '0.95em',
+            borderRadius: 999,
+            background: c.highlight,
+            filter: 'blur(6px)',
+            opacity: animate ? 0 : 0.65,
+            transform: `translateY(-50%) scaleX(${animate ? 0.4 : 1})`,
+            transformOrigin: '50% 50%',
+            transition: 'transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease',
+            zIndex: 0,
+            pointerEvents: 'none',
+          }}
+        />
+        <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
       </span>
     );
   }

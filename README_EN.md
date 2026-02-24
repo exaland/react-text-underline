@@ -14,7 +14,7 @@
 
 ---
 
-9 animated variants: **marker**, **brush**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**.
+12 animated variants: **marker**, **brush**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**, **pill**, **dashed**, **blur**.
 
 ## Installation
 
@@ -61,6 +61,12 @@ express delivery
 | `double` | Elegant double line |
 
 | `wave` | SVG wavy underline |
+
+| `pill` | Rounded capsule highlight |
+
+| `dashed` | Animated dashed underline |
+
+| `blur` | Soft glow highlight behind text |
 
 ## Available Colors
 
@@ -124,6 +130,21 @@ expertise
 // Wavy Underline
 <TextHighlight variant="wave" color="blue">
 solutions turnkey
+</TextHighlight>
+
+// Rounded capsule highlight
+<TextHighlight variant="pill" color="purple">
+new collection
+</TextHighlight>
+
+// Animated dashed underline
+<TextHighlight variant="dashed" color="red">
+limited edition
+</TextHighlight>
+
+// Soft blur glow
+<TextHighlight variant="blur" color="neonGreen">
+instant focus
 </TextHighlight>
 ```
 
