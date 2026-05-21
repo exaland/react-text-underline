@@ -1,4 +1,5 @@
 
+
 # react-text-highlight
 
 > [English Readme Here](https://github.com/exaland/react-text-underline/blob/main/README_EN.md)
@@ -6,6 +7,10 @@
   ![text-underline-new](https://github.com/user-attachments/assets/d7d0f759-fa54-4670-a904-842d7927392b)
 
   **Auteur: Exaland Concept - Alexandre MAGNIER**
+
+  
+<a href="https://www.producthunt.com/products/react-text-underline?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-react-text-underline" target="_blank" rel="noopener noreferrer"><img alt="react-text-underline - Text effects that make your UI shine | Product Hunt" width="250" height="54"  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1152902&amp;theme=light&amp;t=1779402395253"></a>
+
 
 
 <a href="https://www.buymeacoffee.com/exaland" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
