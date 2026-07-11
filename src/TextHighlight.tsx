@@ -9,6 +9,7 @@ export type HighlightColor =
   | 'purple'
   | 'blue'
   | 'red'
+  | 'black'
   | 'neonCyan'
   | 'neonPurple'
   | 'neonGreen';
@@ -47,6 +48,7 @@ const COLORS: Record<HighlightColor, { highlight: string; text: string | null }>
   neonCyan:   { highlight: '#06b6d4', text: '#fff' },
   neonPurple: { highlight: '#a855f7', text: '#fff' },
   neonGreen:  { highlight: '#22c55e', text: '#fff' },
+  black:      { highlight: '#000000', text: '#fff' },
 };
 
 const GRADIENTS: Record<HighlightColor, string> = {
@@ -61,6 +63,7 @@ const GRADIENTS: Record<HighlightColor, string> = {
   neonCyan:   'linear-gradient(90deg, #06b6d4, #0ea5e9)',
   neonPurple: 'linear-gradient(90deg, #a855f7, #ec4899)',
   neonGreen:  'linear-gradient(90deg, #22c55e, #84cc16)',
+  black:      'linear-gradient(90deg, #000000, #434343)',
 };
 
 function hexToRgba(hex: string, alpha: number) {
