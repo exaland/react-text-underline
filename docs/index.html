@@ -272,6 +272,7 @@
       purple:     { highlight: '#ddd6fe', text: null },
       blue:       { highlight: '#bfdbfe', text: null },
       red:        { highlight: '#fecaca', text: null },
+      black:      { highlight: '#000000', text: '#fff' },
       neonCyan:   { highlight: '#06b6d4', text: '#fff' },
       neonPurple: { highlight: '#a855f7', text: '#fff' },
       neonGreen:  { highlight: '#22c55e', text: '#fff' },
@@ -289,6 +290,7 @@
       neonCyan:   'linear-gradient(90deg, #06b6d4, #0ea5e9)',
       neonPurple: 'linear-gradient(90deg, #a855f7, #ec4899)',
       neonGreen:  'linear-gradient(90deg, #22c55e, #84cc16)',
+      black:      'linear-gradient(90deg, #000000, #434343)',
     };
 
     function hexToRgba(hex, alpha) {
@@ -618,6 +620,7 @@
       pink:       '#fbcfe8', orange:     '#fed7aa', purple: '#ddd6fe',
       blue:       '#bfdbfe', red:        '#fecaca',
       neonCyan:   '#06b6d4', neonPurple: '#a855f7', neonGreen: '#22c55e',
+      black:      '#000000',
     };
 
     const VARIANTS = ['marker', 'brush', 'brushstroke', 'gradient', 'slide', 'glow', 'scratch', 'double', 'wave', 'pill', 'dashed', 'blur'];
@@ -666,7 +669,7 @@
               </TextHighlight>
             </h1>
             <p>
-              12 variants, 11 colors — marker, brush, brushstroke, gradient, slide, glow, scratch, double, wave, pill, dashed, blur.
+              12 variants, 12 colors — marker, brush, brushstroke, gradient, slide, glow, scratch, double, wave, pill, dashed, blur.
               Zero dependencies beyond React.
             </p>
             <div className="install-block">
