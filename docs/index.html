@@ -635,6 +635,333 @@
         );
       }
 
+      if (variant === 'shimmer') {
+        return (
+          <span
+            style={{ position: 'relative', display: 'inline-block', padding: '0 4px', color: c.text ?? 'inherit', ...style }}
+            onMouseEnter={e => {
+              if (!animate) return;
+              const glow = e.currentTarget.querySelector('[data-shimmer-bg]');
+              if (!glow) return;
+              glow.style.backgroundPosition = '140% 0';
+            }}
+            onMouseLeave={e => {
+              if (!animate) return;
+              const glow = e.currentTarget.querySelector('[data-shimmer-bg]');
+              if (!glow) return;
+              glow.style.backgroundPosition = '-140% 0';
+            }}
+          >
+            <span
+              data-shimmer-bg
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: 6,
+                backgroundImage: `linear-gradient(110deg, ${hexToRgba(c.highlight, 0.12)} 20%, ${hexToRgba(c.highlight, 0.88)} 48%, ${hexToRgba(c.highlight, 0.12)} 80%)`,
+                backgroundSize: '220% 100%',
+                backgroundPosition: animate ? '-140% 0' : '40% 0',
+                transition: 'background-position 0.8s cubic-bezier(0.4,0,0.2,1)',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
+            />
+            <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
+          </span>
+        );
+      }
+
+      if (variant === 'underline-animated') {
+        return (
+          <span style={{ position: 'relative', display: 'inline-block', paddingBottom: 4, color: c.text ?? 'inherit', ...style }}>
+            {children}
+            <span
+              data-underline-animated
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: 3,
+                borderRadius: 999,
+                background: c.highlight,
+                transformOrigin: '0 50%',
+                transform: 'scaleX(0)',
+                transition: 'transform 0.55s cubic-bezier(0.25,0.8,0.25,1)',
+              }}
+              ref={el => {
+                if (!el) return;
+                requestAnimationFrame(() => { el.style.transform = 'scaleX(1)'; });
+              }}
+            />
+          </span>
+        );
+      }
+
+      if (variant === 'stamp') {
+        const seed = typeof children === 'string' ? children.split('').reduce((a, ch) => a + ch.charCodeAt(0), 0) : 29;
+        const stampRot = ((seed + color.length) % 9) - 4;
+        return (
+          <span
+            style={{ position: 'relative', display: 'inline-block', padding: '1px 8px', color: c.text ?? 'inherit', ...style }}
+            onMouseEnter={e => {
+              if (!animate) return;
+              const plate = e.currentTarget.querySelector('[data-stamp-bg]');
+              if (!plate) return;
+              plate.style.transform = `rotate(${stampRot}deg) scale(1.03)`;
+            }}
+            onMouseLeave={e => {
+              if (!animate) return;
+              const plate = e.currentTarget.querySelector('[data-stamp-bg]');
+              if (!plate) return;
+              plate.style.transform = `rotate(${stampRot}deg) scale(1)`;
+            }}
+          >
+            <span
+              data-stamp-bg
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                border: `2px solid ${hexToRgba(c.highlight, 0.85)}`,
+                borderRadius: 6,
+                transform: `rotate(${stampRot}deg) scale(1)`,
+                background: hexToRgba(c.highlight, 0.18),
+                boxShadow: `0 1px 0 ${hexToRgba(c.highlight, 0.45)} inset`,
+                transition: 'transform 0.2s ease',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
+            />
+            <span style={{ position: 'relative', zIndex: 1, fontWeight: 700, letterSpacing: '0.02em' }}>{children}</span>
+          </span>
+        );
+      }
+
+      if (variant === 'neon-border') {
+        const baseShadow = `0 0 0 1px ${hexToRgba(c.highlight, 0.75)} inset, 0 0 10px ${hexToRgba(c.highlight, 0.35)}`;
+        const hoverShadow = `0 0 0 1px ${hexToRgba(c.highlight, 0.95)} inset, 0 0 12px ${hexToRgba(c.highlight, 0.8)}, 0 0 28px ${hexToRgba(c.highlight, 0.45)}`;
+        return (
+          <span
+            style={{ position: 'relative', display: 'inline-block', padding: '1px 8px', color: c.text ?? 'inherit', borderRadius: 8, boxShadow: animate ? baseShadow : hoverShadow, transition: 'box-shadow 0.3s ease', ...style }}
+            onMouseEnter={e => { if (!animate) return; e.currentTarget.style.boxShadow = hoverShadow; }}
+            onMouseLeave={e => { if (!animate) return; e.currentTarget.style.boxShadow = baseShadow; }}
+          >{children}</span>
+        );
+      }
+
+      if (variant === 'rainbow') {
+        return (
+          <span
+            style={{
+              position: 'relative', display: 'inline-block', fontWeight: 600,
+              backgroundImage: 'linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #06b6d4, #3b82f6, #a855f7)',
+              backgroundSize: '250% 100%',
+              backgroundPosition: animate ? '0% 0' : '40% 0',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              transition: 'background-position 0.9s ease',
+              ...style,
+            }}
+            onMouseEnter={e => { if (!animate) return; e.currentTarget.style.backgroundPosition = '100% 0'; }}
+            onMouseLeave={e => { if (!animate) return; e.currentTarget.style.backgroundPosition = '0% 0'; }}
+          >{children}</span>
+        );
+      }
+
+      if (variant === 'spotlight') {
+        return (
+          <span
+            style={{ position: 'relative', display: 'inline-block', padding: '0 4px', color: c.text ?? 'inherit', ...style }}
+            onMouseEnter={e => {
+              if (!animate) return;
+              const light = e.currentTarget.querySelector('[data-spotlight-bg]');
+              if (!light) return;
+              light.style.backgroundPosition = '100% 50%';
+            }}
+            onMouseLeave={e => {
+              if (!animate) return;
+              const light = e.currentTarget.querySelector('[data-spotlight-bg]');
+              if (!light) return;
+              light.style.backgroundPosition = '0% 50%';
+            }}
+          >
+            <span
+              data-spotlight-bg
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: 6,
+                backgroundImage: `radial-gradient(circle at 0% 50%, ${hexToRgba(c.highlight, 0.75)} 0%, ${hexToRgba(c.highlight, 0.22)} 35%, ${hexToRgba(c.highlight, 0)} 70%)`,
+                backgroundSize: '220% 100%',
+                backgroundPosition: animate ? '0% 50%' : '50% 50%',
+                transition: 'background-position 0.6s ease',
+                pointerEvents: 'none',
+                zIndex: 0,
+              }}
+            />
+            <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
+          </span>
+        );
+      }
+
+      if (variant === 'typewriter') {
+        return (
+          <span
+            style={{ position: 'relative', display: 'inline-block', padding: '0 4px', color: c.text ?? 'inherit', ...style }}
+            onMouseEnter={e => {
+              if (!animate) return;
+              const fill = e.currentTarget.querySelector('[data-typewriter-fill]');
+              const caret = e.currentTarget.querySelector('[data-typewriter-caret]');
+              if (fill) fill.style.width = '100%';
+              if (caret) caret.style.opacity = '1';
+            }}
+            onMouseLeave={e => {
+              if (!animate) return;
+              const fill = e.currentTarget.querySelector('[data-typewriter-fill]');
+              const caret = e.currentTarget.querySelector('[data-typewriter-caret]');
+              if (fill) fill.style.width = '0%';
+              if (caret) caret.style.opacity = '0';
+            }}
+          >
+            <span
+              data-typewriter-fill
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: '58%',
+                height: '1.05em',
+                width: animate ? '0%' : '100%',
+                borderRadius: 4,
+                background: c.highlight,
+                transition: 'width 0.9s steps(18, end)',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
+            />
+            <span
+              data-typewriter-caret
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                right: 0,
+                top: '54%',
+                width: 2,
+                height: '1.1em',
+                background: c.text ?? '#111827',
+                opacity: 0,
+                transition: 'opacity 0.2s ease',
+                zIndex: 1,
+                pointerEvents: 'none',
+              }}
+            />
+            <span style={{ position: 'relative', zIndex: 2 }}>{children}</span>
+          </span>
+        );
+      }
+
+      if (variant === 'ink-drip') {
+        return (
+          <span
+            style={{ position: 'relative', display: 'inline-block', paddingBottom: 8, color: c.text ?? 'inherit', ...style }}
+            onMouseEnter={e => {
+              if (!animate) return;
+              const drops = e.currentTarget.querySelectorAll('[data-ink-drip]');
+              drops.forEach((drop, index) => {
+                drop.style.opacity = '0.95';
+                drop.style.transform = `translateY(${8 + index * 2}px) scaleY(${1.1 + index * 0.1})`;
+              });
+            }}
+            onMouseLeave={e => {
+              if (!animate) return;
+              const drops = e.currentTarget.querySelectorAll('[data-ink-drip]');
+              drops.forEach(drop => {
+                drop.style.opacity = '0.6';
+                drop.style.transform = 'translateY(0) scaleY(1)';
+              });
+            }}
+          >
+            <span aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, bottom: 2, height: 4, borderRadius: 999, background: c.highlight, zIndex: 0 }} />
+            <span data-ink-drip aria-hidden="true" style={{ position: 'absolute', left: '16%', bottom: -1, width: 4, height: 8, borderRadius: 999, background: c.highlight, opacity: 0.6, transform: 'translateY(0) scaleY(1)', transition: 'transform 0.35s ease, opacity 0.25s ease' }} />
+            <span data-ink-drip aria-hidden="true" style={{ position: 'absolute', left: '45%', bottom: -1, width: 5, height: 10, borderRadius: 999, background: c.highlight, opacity: 0.6, transform: 'translateY(0) scaleY(1)', transition: 'transform 0.35s ease 0.04s, opacity 0.25s ease' }} />
+            <span data-ink-drip aria-hidden="true" style={{ position: 'absolute', left: '74%', bottom: -1, width: 4, height: 7, borderRadius: 999, background: c.highlight, opacity: 0.6, transform: 'translateY(0) scaleY(1)', transition: 'transform 0.35s ease 0.08s, opacity 0.25s ease' }} />
+            <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
+          </span>
+        );
+      }
+
+      if (variant === 'splatter') {
+        return (
+          <span
+            style={{ position: 'relative', display: 'inline-block', padding: '0 4px', color: c.text ?? 'inherit', ...style }}
+            onMouseEnter={e => {
+              if (!animate) return;
+              const dots = e.currentTarget.querySelectorAll('[data-splatter-dot]');
+              dots.forEach(dot => { dot.style.opacity = '0.9'; dot.style.transform = 'scale(1)'; });
+            }}
+            onMouseLeave={e => {
+              if (!animate) return;
+              const dots = e.currentTarget.querySelectorAll('[data-splatter-dot]');
+              dots.forEach(dot => { dot.style.opacity = '0'; dot.style.transform = 'scale(0.35)'; });
+            }}
+          >
+            <span aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, top: '58%', height: '0.95em', borderRadius: 999, background: hexToRgba(c.highlight, 0.75), zIndex: 0 }} />
+            <span data-splatter-dot aria-hidden="true" style={{ position: 'absolute', left: '-6px', top: '40%', width: 6, height: 6, borderRadius: 999, background: c.highlight, opacity: animate ? 0 : 0.9, transform: `scale(${animate ? 0.35 : 1})`, transition: 'transform 0.28s ease, opacity 0.2s ease' }} />
+            <span data-splatter-dot aria-hidden="true" style={{ position: 'absolute', right: '-5px', top: '22%', width: 5, height: 5, borderRadius: 999, background: c.highlight, opacity: animate ? 0 : 0.85, transform: `scale(${animate ? 0.35 : 1})`, transition: 'transform 0.28s ease 0.03s, opacity 0.2s ease' }} />
+            <span data-splatter-dot aria-hidden="true" style={{ position: 'absolute', left: '34%', top: '18%', width: 4, height: 4, borderRadius: 999, background: c.highlight, opacity: animate ? 0 : 0.8, transform: `scale(${animate ? 0.35 : 1})`, transition: 'transform 0.28s ease 0.05s, opacity 0.2s ease' }} />
+            <span data-splatter-dot aria-hidden="true" style={{ position: 'absolute', left: '62%', top: '70%', width: 5, height: 5, borderRadius: 999, background: c.highlight, opacity: animate ? 0 : 0.8, transform: `scale(${animate ? 0.35 : 1})`, transition: 'transform 0.28s ease 0.08s, opacity 0.2s ease' }} />
+            <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
+          </span>
+        );
+      }
+
+      if (variant === 'chrome') {
+        return (
+          <span
+            style={{ position: 'relative', display: 'inline-block', fontWeight: 600, ...style }}
+            onMouseEnter={e => {
+              if (!animate) return;
+              const shine = e.currentTarget.querySelector('[data-chrome-shine]');
+              if (!shine) return;
+              shine.style.backgroundPosition = '140% 0';
+            }}
+            onMouseLeave={e => {
+              if (!animate) return;
+              const shine = e.currentTarget.querySelector('[data-chrome-shine]');
+              if (!shine) return;
+              shine.style.backgroundPosition = '-140% 0';
+            }}
+          >
+            <span style={{
+              backgroundImage: 'linear-gradient(180deg, #f8fafc 0%, #cbd5e1 30%, #475569 52%, #e2e8f0 70%, #94a3b8 100%)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: `0 0 8px ${hexToRgba(c.highlight, 0.28)}`,
+            }}>{children}</span>
+            <span
+              data-chrome-shine
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: 'linear-gradient(120deg, rgba(255,255,255,0) 32%, rgba(255,255,255,0.78) 50%, rgba(255,255,255,0) 68%)',
+                backgroundSize: '220% 100%',
+                backgroundPosition: animate ? '-140% 0' : '35% 0',
+                mixBlendMode: 'screen',
+                transition: 'background-position 0.8s ease',
+                pointerEvents: 'none',
+              }}
+            />
+          </span>
+        );
+      }
+
       return <span>{children}</span>;
     }
 
@@ -651,7 +978,7 @@
       darkPurple: '#5b21b6', darkBlue:   '#1e3a8a', darkGreen:   '#15803d',
     };
 
-    const VARIANTS = ['marker', 'brush', 'brushstroke', 'gradient', 'slide', 'glow', 'scratch', 'double', 'wave', 'pill', 'dashed', 'blur'];
+    const VARIANTS = ['marker', 'brush', 'brushstroke', 'gradient', 'slide', 'glow', 'scratch', 'double', 'wave', 'pill', 'dashed', 'blur', 'shimmer', 'underline-animated', 'stamp', 'neon-border', 'rainbow', 'spotlight', 'typewriter', 'ink-drip', 'splatter', 'chrome'];
 
     /* ─────────────────── App ─────────────────── */
     function App() {
@@ -659,18 +986,28 @@
       const [pgColor,   setPgColor]   = useState('yellow');
 
       const variantDescriptions = {
-        marker:     'Surligneur qui s\'anime au hover',
-        brush:      'Surlignage façon pinceau derrière le texte',
-        brushstroke: 'Trait de pinceau SVG sous le texte',
-        gradient:   'Soulignement dégradé au hover',
-        slide:      'Fond qui glisse derrière le texte',
-        glow:       'Lueur lumineuse sur le texte',
-        scratch:    'Soulignement manuscrit double trait',
-        double:     'Double soulignement parallèle',
-        wave:       'Soulignement en vague sinusoïdale',
-        pill:       'Surlignage capsule arrondi',
-        dashed:     'Soulignement en tirets animé',
-        blur:       'Halo diffus sous le texte',
+        marker:            'Surligneur qui s\'anime au hover',
+        brush:             'Surlignage façon pinceau derrière le texte',
+        brushstroke:       'Trait de pinceau SVG sous le texte',
+        gradient:          'Soulignement dégradé au hover',
+        slide:             'Fond qui glisse derrière le texte',
+        glow:              'Lueur lumineuse sur le texte',
+        scratch:           'Soulignement manuscrit double trait',
+        double:            'Double soulignement parallèle',
+        wave:              'Soulignement en vague sinusoïdale',
+        pill:              'Surlignage capsule arrondi',
+        dashed:            'Soulignement en tirets animé',
+        blur:              'Halo diffus sous le texte',
+        shimmer:           'Éclat lumineux traversant le fond',
+        'underline-animated': 'Soulignement qui s\'anime automatiquement',
+        stamp:             'Cadre tampon légèrement incliné',
+        'neon-border':     'Bordure néon lumineuse au hover',
+        rainbow:           'Texte arc-en-ciel animé',
+        spotlight:         'Projecteur lumineux glissant',
+        typewriter:        'Fond machine à écrire pas-à-pas',
+        'ink-drip':        'Gouttes d\'encre tombant du soulignement',
+        splatter:          'Éclaboussures colorées autour du texte',
+        chrome:            'Reflet métallique chromé',
       };
 
       return (
@@ -697,7 +1034,7 @@
               </TextHighlight>
             </h1>
             <p>
-              12 variants, 23+ colors — marker, brush, brushstroke, gradient, slide, glow, scratch, double, wave, pill, dashed, blur.
+              22 variants, 23+ colors — marker, brush, brushstroke, gradient, slide, glow, scratch, double, wave, pill, dashed, blur, shimmer, underline-animated, stamp, neon-border, rainbow, spotlight, typewriter, ink-drip, splatter, chrome.
               Zero dependencies beyond React.
             </p>
             <div className="install-block">
@@ -804,7 +1141,7 @@
               </thead>
               <tbody>
                 {[
-                  ['variant', '"marker" | "brush" | "brushstroke" | "gradient" | "slide" | "glow" | "scratch" | "double" | "wave" | "pill" | "dashed" | "blur"', '"marker"', 'Visual effect style'],
+                  ['variant', '"marker" | "brush" | "brushstroke" | "gradient" | "slide" | "glow" | "scratch" | "double" | "wave" | "pill" | "dashed" | "blur" | "shimmer" | "underline-animated" | "stamp" | "neon-border" | "rainbow" | "spotlight" | "typewriter" | "ink-drip" | "splatter" | "chrome"', '"marker"', 'Visual effect style'],
                   ['color',   '"yellow" | "cyan" | "green" | "pink" | "orange" | "purple" | "blue" | "red" | "black" | "neonCyan" | "neonPurple" | "neonGreen" | "gold" | "silver" | "coral" | "turquoise" | "lime" | "pastelPink" | "pastelBlue" | "pastelGreen" | "pastelYellow" | "darkPurple" | "darkBlue" | "darkGreen"', '"yellow"', 'Highlight color'],
                   ['animate', 'boolean', 'true', 'Enable hover animations'],
                   ['className','string', '""', 'Additional CSS classes'],

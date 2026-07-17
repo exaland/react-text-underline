@@ -1,6 +1,6 @@
 {
   "name": "react-text-underline",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Premium text highlight & underline effects for React — marker, brushstroke, gradient, slide, glow, scratch, double, wave",
   "keywords": [
     "react",
@@ -19,7 +19,7 @@
     "glow",
     "scratch",
     "double",
-    "wave"  
+    "wave"
   ],
   "author": "Exaland Concept <exaland@gmail.com>",
   "license": "MIT",
