@@ -14,7 +14,7 @@
 
 ---
 
-12 animated variants: **marker**, **brush**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**, **pill**, **dashed**, **blur**.
+22 animated variants: **marker**, **brush**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**, **pill**, **dashed**, **blur**, **shimmer**, **underline-animated**, **stamp**, **neon-border**, **rainbow**, **spotlight**, **typewriter**, **ink-drip**, **splatter**, **chrome**.
 
 ## Installation
 
@@ -68,9 +68,29 @@ express delivery
 
 | `blur` | Soft glow highlight behind text |
 
+| `shimmer` | Sparkle/shimmer highlight effect |
+
+| `underline-animated` | Animated hand-drawn underline effect |
+
+| `stamp` | Stamped highlight with slight tilt |
+
+| `neon-border` | Neon border with glow |
+
+| `rainbow` | Animated rainbow effect |
+
+| `spotlight` | Spotlight/lighting effect |
+
+| `typewriter` | Typewriter-style highlighted reveal |
+
+| `ink-drip` | Dripping ink effect |
+
+| `splatter` | Paint splatter effect |
+
+| `chrome` | Chrome/metallic effect |
+
 ## Available Colors
 
-`yellow` · `cyan` · `green` · `pink` · `orange` · `purple` · `blue` · `red` · `neonCyan` · `neonPurple` · `neonGreen`
+`yellow` · `cyan` · `green` · `pink` · `orange` · `purple` · `blue` · `red` · `black` · `neonCyan` · `neonPurple` · `neonGreen` · `gold` · `silver` · `coral` · `turquoise` · `lime` · `pastelPink` · `pastelBlue` · `pastelGreen` · `pastelYellow` · `darkPurple` · `darkBlue` · `darkGreen`
 
 ## Props
 
