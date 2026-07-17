@@ -24,7 +24,7 @@
 
 ---
 
-12 variants animés : **marker**, **brush**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**, **pill**, **dashed**, **blur**.
+22 variants animés : **marker**, **brush**, **brushstroke**, **gradient**, **slide**, **glow**, **scratch**, **double**, **wave**, **pill**, **dashed**, **blur**, **shimmer**, **underline-animated**, **stamp**, **neon-border**, **rainbow**, **spotlight**, **typewriter**, **ink-drip**, **splatter**, **chrome**.
 
   
 
@@ -102,13 +102,33 @@ livraison express
 
 | `blur` | Halo diffus sous le texte |
 
+| `shimmer` | Effet de scintillement/paillettes |
+
+| `underline-animated` | Soulignage animé avec effet de dessin |
+
+| `stamp` | Effet de tampon incliné |
+
+| `neon-border` | Bordure néon avec halo lumineux |
+
+| `rainbow` | Effet arc-en-ciel animé |
+
+| `spotlight` | Effet projecteur/éclairage |
+
+| `typewriter` | Effet machine à écrire sur le surlignage |
+
+| `ink-drip` | Effet d'encre qui s'écoule |
+
+| `splatter` | Effet d'éclaboussure |
+
+| `chrome` | Effet chromé/métallique |
+
   
 
 ## Couleurs disponibles
 
   
 
-`yellow` · `cyan` · `green` · `pink` · `orange` · `purple` · `blue` · `red` · `neonCyan` · `neonPurple` · `neonGreen`
+`yellow` · `cyan` · `green` · `pink` · `orange` · `purple` · `blue` · `red` · `black` · `neonCyan` · `neonPurple` · `neonGreen` · `gold` · `silver` · `coral` · `turquoise` · `lime` · `pastelPink` · `pastelBlue` · `pastelGreen` · `pastelYellow` · `darkPurple` · `darkBlue` · `darkGreen`
 
   
 
