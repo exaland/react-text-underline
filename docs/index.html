@@ -276,6 +276,18 @@
       neonCyan:   { highlight: '#06b6d4', text: '#fff' },
       neonPurple: { highlight: '#a855f7', text: '#fff' },
       neonGreen:  { highlight: '#22c55e', text: '#fff' },
+      gold:       { highlight: '#fcd34d', text: null },
+      silver:     { highlight: '#e5e7eb', text: '#1f2937' },
+      coral:      { highlight: '#ff7f50', text: '#fff' },
+      turquoise:  { highlight: '#14b8a6', text: '#fff' },
+      lime:       { highlight: '#84cc16', text: '#1f2937' },
+      pastelPink: { highlight: '#fce7f3', text: null },
+      pastelBlue: { highlight: '#e0e7ff', text: null },
+      pastelGreen: { highlight: '#dbeafe', text: null },
+      pastelYellow: { highlight: '#fef3c7', text: null },
+      darkPurple: { highlight: '#5b21b6', text: '#fff' },
+      darkBlue:   { highlight: '#1e3a8a', text: '#fff' },
+      darkGreen:  { highlight: '#15803d', text: '#fff' },
     };
 
     const GRADIENTS = {
@@ -291,6 +303,18 @@
       neonPurple: 'linear-gradient(90deg, #a855f7, #ec4899)',
       neonGreen:  'linear-gradient(90deg, #22c55e, #84cc16)',
       black:      'linear-gradient(90deg, #000000, #434343)',
+      gold:       'linear-gradient(90deg, #fcd34d, #f59e0b)',
+      silver:     'linear-gradient(90deg, #e5e7eb, #d1d5db)',
+      coral:      'linear-gradient(90deg, #ff7f50, #ff6347)',
+      turquoise:  'linear-gradient(90deg, #14b8a6, #0891b2)',
+      lime:       'linear-gradient(90deg, #84cc16, #65a30d)',
+      pastelPink: 'linear-gradient(90deg, #fce7f3, #fbcfe8)',
+      pastelBlue: 'linear-gradient(90deg, #e0e7ff, #ddd6fe)',
+      pastelGreen: 'linear-gradient(90deg, #dbeafe, #bbf7d0)',
+      pastelYellow: 'linear-gradient(90deg, #fef3c7, #fed7aa)',
+      darkPurple: 'linear-gradient(90deg, #5b21b6, #7c3aed)',
+      darkBlue:   'linear-gradient(90deg, #1e3a8a, #3b82f6)',
+      darkGreen:  'linear-gradient(90deg, #15803d, #22c55e)',
     };
 
     function hexToRgba(hex, alpha) {
@@ -621,6 +645,10 @@
       blue:       '#bfdbfe', red:        '#fecaca',
       neonCyan:   '#06b6d4', neonPurple: '#a855f7', neonGreen: '#22c55e',
       black:      '#000000',
+      gold:       '#fcd34d', silver:     '#e5e7eb', coral:  '#ff7f50',
+      turquoise:  '#14b8a6', lime:       '#84cc16',
+      pastelPink: '#fce7f3', pastelBlue: '#e0e7ff', pastelGreen: '#dbeafe', pastelYellow: '#fef3c7',
+      darkPurple: '#5b21b6', darkBlue:   '#1e3a8a', darkGreen:   '#15803d',
     };
 
     const VARIANTS = ['marker', 'brush', 'brushstroke', 'gradient', 'slide', 'glow', 'scratch', 'double', 'wave', 'pill', 'dashed', 'blur'];
@@ -669,7 +697,7 @@
               </TextHighlight>
             </h1>
             <p>
-              12 variants, 12 colors — marker, brush, brushstroke, gradient, slide, glow, scratch, double, wave, pill, dashed, blur.
+              12 variants, 23+ colors — marker, brush, brushstroke, gradient, slide, glow, scratch, double, wave, pill, dashed, blur.
               Zero dependencies beyond React.
             </p>
             <div className="install-block">
@@ -688,7 +716,7 @@
                   <div className="card-preview">
                     <TextHighlight variant={v} color="neonPurple">{v === 'glow' ? 'Glow effect' : 'Hello world'}</TextHighlight>
                   </div>
-                  <pre className="card-code"><span className="tag">&lt;TextHighlight</span>{'\n'}  <span className="attr">variant</span>=<span className="str">"{v}"</span>{'\n'}  <span className="attr">color</span>=<span className="str">"neonPurple"</span>{'\n'}<span className="tag">&gt;</span>Hello world<span className="tag">&lt;/TextHighlight&gt;</span></pre>
+                  <pre className="card-code"><span className="tag">&lt;TextHighlight</span>{'\n'}  <span className="attr">variant</span>=<span className="str">"{v}"</span>{'\n'}  <span className="attr">color</span>=<span className="str">"neonPurple"</span>{'\n'}<span className="tag">/&gt;</span></pre>
                 </div>
               ))}
             </div>
@@ -753,7 +781,9 @@
               <span className="kw">export default function</span> <span className="tag">Page</span>() {'{'}{'\n'}
               {'  '}<span className="kw">return</span> ({'\n'}
               {'    '}<span className="tag">&lt;h1&gt;</span>{'\n'}
-              {'      '}Build <span className="tag">&lt;TextHighlight</span> <span className="attr">variant</span>=<span className="str">"marker"</span> <span className="attr">color</span>=<span className="str">"yellow"</span><span className="tag">&gt;</span>amazing<span className="tag">&lt;/TextHighlight&gt;</span> products{'\n'}
+              {'      '}Build <span className="tag">&lt;TextHighlight</span> <span className="attr">variant</span>=<span className="str">"marker"</span> <span className="attr">color</span>=<span className="str">"neonPurple"</span><span className="tag">&gt;</span>{'\n'}
+              {'        '}amazing text effects{'\n'}
+              {'      '}<span className="tag">&lt;/TextHighlight&gt;</span>{'\n'}
               {'    '}<span className="tag">&lt;/h1&gt;</span>{'\n'}
               {'  '});{'\n'}
               {'}'}
@@ -775,7 +805,7 @@
               <tbody>
                 {[
                   ['variant', '"marker" | "brush" | "brushstroke" | "gradient" | "slide" | "glow" | "scratch" | "double" | "wave" | "pill" | "dashed" | "blur"', '"marker"', 'Visual effect style'],
-                  ['color',   '"yellow" | "cyan" | "green" | "pink" | "orange" | "purple" | "blue" | "red" | "neonCyan" | "neonPurple" | "neonGreen"', '"yellow"', 'Highlight color'],
+                  ['color',   '"yellow" | "cyan" | "green" | "pink" | "orange" | "purple" | "blue" | "red" | "black" | "neonCyan" | "neonPurple" | "neonGreen" | "gold" | "silver" | "coral" | "turquoise" | "lime" | "pastelPink" | "pastelBlue" | "pastelGreen" | "pastelYellow" | "darkPurple" | "darkBlue" | "darkGreen"', '"yellow"', 'Highlight color'],
                   ['animate', 'boolean', 'true', 'Enable hover animations'],
                   ['className','string', '""', 'Additional CSS classes'],
                 ].map(([prop, type, def, desc], i) => (
@@ -788,6 +818,19 @@
                 ))}
               </tbody>
             </table>
+          </section>
+
+          <section>
+            <h2>Available Colors</h2>
+            <p className="section-sub">23+ beautiful colors to choose from.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '16px' }}>
+              {Object.entries(SWATCH_COLORS).map(([name, hex]) => (
+                <div key={name} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', padding: '12px', textAlign: 'center' }}>
+                  <div style={{ background: hex, height: '60px', borderRadius: '8px', marginBottom: '8px' }} />
+                  <div style={{ fontSize: '0.75rem', color: 'var(--muted)', fontWeight: 500 }}>{name}</div>
+                </div>
+              ))}
+            </div>
           </section>
 
           <footer>
