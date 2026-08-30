@@ -1,0 +1,46 @@
+.pill {
+  position: relative;
+  display: inline-block;
+  padding: 0.4em 1.05em;
+  border-radius: 18px;
+  color: #0b1020;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(90deg, #8b5cf6 0%, #f0abfc 100%);
+  background-size: 200% 100%;
+  animation: rtu-gradient 6s linear infinite;
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.18);
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: visible;
+  z-index: 1;
+}
+
+/* halo diffus derrière la pill */
+.pill::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, rgba(139,92,246,0.7), rgba(240,171,252,0.7));
+  filter: blur(18px);
+  opacity: 0.6;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* léger trait interne pour effet "frosted" */
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 0;
+  display: inline-block;
+  color: white;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* animation du gradient */
+@keyframes rtu-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
